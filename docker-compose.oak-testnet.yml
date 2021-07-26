@@ -19,6 +19,7 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://rpc.testnet.oak.tech:9933
       - SUBSTRATE_ADDRESS_TYPE=42
+      - TYPE_REGISTRY=development
       - TYPE_REGISTRY_FILE=app/type_registry/oak_testnet.json
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
@@ -44,6 +45,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://rpc.testnet.oak.tech:9933
+      - TYPE_REGISTRY=development
       - TYPE_REGISTRY_FILE=app/type_registry/oak_testnet.json
       - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
