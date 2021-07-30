@@ -22,8 +22,6 @@ services:
       - TYPE_REGISTRY=development
       - TYPE_REGISTRY_FILE=app/type_registry/oak_testnet.json
       - SUBSTRATE_METADATA_VERSION=9
-      - SUBSTRATE_STORAGE_BALANCE=Account
-      - SUBSTRATE_STORAGE_INDICES=Accounts
     depends_on:
       - mysql
 
