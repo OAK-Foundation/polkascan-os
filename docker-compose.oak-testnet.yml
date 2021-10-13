@@ -9,6 +9,7 @@ services:
     volumes:
       - './explorer-api:/usr/src/app'
     command: ./start.sh
+    restart: always
     environment:
       - PYTHONPATH=/usr/src/app
       - ENVIRONMENT=prod
@@ -34,6 +35,7 @@ services:
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
+    restart: always
     environment: &env
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
@@ -62,6 +64,7 @@ services:
     volumes:
       - './harvester:/usr/src/app'
     command: celery -A app.tasks worker --loglevel=INFO
+    restart: always
     environment: *env
     depends_on:
       - redis
@@ -74,6 +77,7 @@ services:
       - './harvester:/usr/src/app'
       - '/usr/src/app/data'
     command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
+    restart: always
     environment: *env
     depends_on:
       - redis
@@ -84,12 +88,14 @@ services:
     ports:
       - '5555:5555'
     command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
+    restart: always
     depends_on:
       - redis
 
   redis:
     image: redis:3.2.11
     hostname: redis
+    restart: always
 
     depends_on:
       - redis
@@ -97,10 +103,12 @@ services:
   redis:
     image: redis:3.2.11
     hostname: redis
+    restart: always
 
   mysql:
     image: mysql:8.0.23
     hostname: mysql
+    restart: always
     security_opt:
       - seccomp:unconfined
     volumes:
@@ -113,6 +121,7 @@ services:
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
+    restart: always
     build:
       context: explorer-gui/.
       args:
@@ -123,7 +132,7 @@ services:
         NETWORK_TOKEN_SYMBOL: OAK
         NETWORK_TOKEN_DECIMALS: 10
         NETWORK_COLOR_CODE: 777777
-        API_URL: http://149.28.147.147:8080/api/v1
+        API_URL: http://rpc.testnet.oak.tech:8080/api/v1
     ports:
       - '8080:80'
     depends_on:
